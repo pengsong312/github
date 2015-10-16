@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.pm.help.dao.CommDao">
+ <!-- 查询所有Web -->
+ 	<select id="findAllPicture" resultType="com.pm.picture_material.entity.Picture" resultMap="findMap">
+ 		select c.*,u.username from material_picture c left join material_user u on c.upload_userid = u.userid
+ 		<where>
+ 			<if test="pictureIntf!= null&amp;&amp;pictureIntf.length()>0">
+ 				and picture_Intf like '%'||#{pictureIntf}||'%'
+ 			</if>
+ 			<if test="classification!= null&amp;&amp;classification.length()>0">
+ 				and c.classification like '%'||#{classification}||'%'
+ 			</if>
+ 			<if test="uploadUser!= null&amp;&amp;uploadUser.length()>0">
+ 				and c.upload_Userid like '%'||#{uploadUser}||'%'
+ 			</if>
+ 			
+ 		</where>
+ 		order by thumb desc,look desc,picture_Intf asc
+ 	</select>
+ 	 	
+ 	<select id="findPictureByIntf" resultType="com.pm.picture_material.entity.Picture" resultMap="findMap">
+ 		select * from material_picture 
+ 		<where>
+ 			<if test="pictureIntf!= null&amp;&amp;pictureIntf.length()>0">
+ 				and picture_Intf = #{pictureIntf}
+ 			</if>			
+ 		</where>
+ 	</select>
+ 	<!--增加下载量-->
+	<update id="addPictureDownload" parameterType="com.pm.picture_material.entity.Picture">
+		update material_picture set
+			download=#{download,jdbcType=VARCHAR} 
+			where picture_intf = #{pictureIntf}
+	</update> 
+ 	<!--增加点赞量-->
+ 	<update id="addPictureThumb" parameterType="com.pm.picture_material.entity.Picture">
+ 		update material_picture set 
+ 			thumb = #{thumb,jdbcType=VARCHAR}
+ 			where picture_intf = #{pictureIntf}
+ 	</update>
+ 	 	<!--增加查看量-->
+ 	<update id="addPictureLook" parameterType="com.pm.picture_material.entity.Picture">
+ 		update material_picture set 
+ 			look = #{look,jdbcType=VARCHAR}
+ 			where picture_intf = #{pictureIntf}
+ 	</update>
+ 	
+ 	<select id="findOnePictureByIntf" resultType="com.pm.picture_material.entity.Picture" resultMap="findMap">
+ 		select * from material_picture 
+ 		<where>
+ 			<if test="pictureIntf!=null&amp;&amp;pictureIntf.length()>0">
+ 				and picture_Intf like '%'||#{pictureIntf}||'%'
+ 			</if> 
+ 		</where>
+ 	</select>
+	<resultMap type="com.pm.picture_material.entity.Picture" id="findMap">
+		<result property="pictureNumber" column="picture_number"/>
+		<result property="pictureIntf" column="picture_intf"/>
+		<result property="note" column="note"/>
+		<result property="uploadUser" column="upload_UserId"/>
+		<result property="classification" column="classification"/>
+		<result property="pictureUrl" column="picture_Url"/>
+		<result property="copyrightInformation" column="copyright_Information"/>
+		<result property="look" column="look"/>
+		<result property="download" column="download"/>
+		<result property="thumb" column="thumb"/>
+		
+	</resultMap>
+	<insert id="uploadPicture" parameterType="com.pm.picture_material.entity.Picture">
+		insert into material_picture(picture_number,picture_Intf,note,upload_userid,classification,picture_Url,copyright_Information,picture) values(		
+			#{pictureNumber,jdbcType=VARCHAR},
+			#{pictureIntf,jdbcType=VARCHAR},	
+			#{note,jdbcType=VARCHAR},
+			#{uploadUser,jdbcType=VARCHAR},
+			#{classification,jdbcType=VARCHAR},
+			#{pictureUrl,jdbcType=VARCHAR},
+			#{copyrightInformation,jdbcType=VARCHAR},
+			#{picture,jdbcType=VARCHAR}
+
+		)
+	</insert>
+	
+	<update id="updatePicture" parameterType="com.pm.picture_material.entity.Picture">
+		update material_picture set
+				picture_Intf = #{pictureIntf ,jdbcType=VARCHAR},
+				note = #{note ,jdbcType=VARCHAR},
+				upload_Userid = #{uploadUser ,jdbcType=VARCHAR},
+				classification = #{classification ,jdbcType=VARCHAR},
+				picture_Url = #{pictureUrl ,jdbcType=VARCHAR},
+				picture = #{picture ,jdbcType=VARCHAR},
+				copyright_Information = #{copyrightInformation ,jdbcType=VARCHAR}
+				where  picture_number = #{pictureNumber}
+	</update>
+	<delete id="delPicture" parameterType="com.pm.picture_material.entity.Picture">
+		delete from material_picture where  picture_number = #{pictureNumber}
+	</delete>
+ </mapper>

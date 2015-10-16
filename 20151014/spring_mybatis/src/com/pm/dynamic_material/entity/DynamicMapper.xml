@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.pm.help.dao.CommDao">
+ <!-- 查询所有Web -->
+ 	<select id="findAllDynamic" resultType="com.pm.dynamic_material.entity.Dynamic" resultMap="findDynamicMap">
+ 		select * from material_dynamic
+		<where>
+ 			<if test="materialType!= null&amp;&amp; materialType.length()>0">
+ 				and material_Type like '%'||#{materialType}||'%'
+ 			</if>
+ 			<if test="dynamicIntf!= null&amp;&amp; dynamicIntf.length()>0">
+ 				and dynamic_Intf like  '%'||#{dynamicIntf}||'%'
+ 			</if>
+ 		</where>
+ 		order by thumb desc,look desc,dynamic_Intf asc
+ 	</select>
+ 	<select id="findOneDynamic" resultType="com.pm.dynamic_material.entity.Dynamic" resultMap="findDynamicMap">
+ 		select * from material_dynamic
+		<where>
+ 			<if test="dynamicIntf!= null&amp;&amp; dynamicIntf.length()>0">
+ 				and dynamic_Intf = #{dynamicIntf}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	<select id="findDynamicByNumber" resultType="com.pm.dynamic_material.entity.Dynamic" resultMap="findDynamicMap">
+ 		select * from material_dynamic
+		<where>
+ 			<if test="dynamicNumber!= null&amp;&amp; dynamicNumber.length()>0">
+ 				and dynamic_number =#{dynamicNumber}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	<select id="findDynamicIntf" resultType="com.pm.dynamic_material.entity.Dynamic" resultMap="findDynamicMap">
+ 		select * from material_dynamic
+		<where>
+ 			<if test="dynamicIntf!= null&amp;&amp; dynamicIntf.length()>0">
+ 				and dynamic_Intf =#{dynamicIntf}
+ 			</if>
+ 		</where>
+ 	</select>
+	<resultMap type="com.pm.dynamic_material.entity.Dynamic" id="findDynamicMap">
+		<result property="dynamicNumber" column="dynamic_number"/>
+		<result property="dynamicIntf" column="dynamic_Intf"/>
+		<result property="picture" column="picture"/>
+		<result property="materialType" column="material_Type"/>
+		<result property="dynamicUrl" column="dynamic_Url"/>
+		<result property="describle" column="describle"/>
+	</resultMap>
+	<insert id="uploadDynamic" parameterType="com.pm.dynamic_material.entity.Dynamic">
+		insert into material_dynamic(dynamic_number,dynamic_Intf,picture,material_Type,dynamic_Url,describle) values(
+			#{dynamicNumber, jdbcType=VARCHAR},
+			#{dynamicIntf, jdbcType=VARCHAR},
+			#{picture, jdbcType=VARCHAR},
+			#{materialType, jdbcType=VARCHAR},
+			#{dynamicUrl, jdbcType=VARCHAR},
+			#{describle, jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- 增加访问以及点赞 -->
+	<update id="addDynamicThumb" parameterType="com.pm.dynamic_material.entity.Dynamic">
+		update material_dynamic set
+			thumb = #{thumb,jdbcType=VARCHAR}
+			where dynamic_number=#{dynamicNumber}
+	</update>
+	<update id="addDynamicLook" parameterType="com.pm.dynamic_material.entity.Dynamic">
+		update material_dynamic set
+			look = #{look,jdbcType=VARCHAR}
+			where dynamic_number=#{dynamicNumber}
+	</update>
+	<update id="updateDynamic" parameterType="com.pm.dynamic_material.entity.Dynamic">
+		update material_dynamic set
+				dynamic_Intf = #{dynamicIntf ,jdbcType=VARCHAR},
+				picture = #{picture ,jdbcType=VARCHAR},
+				material_Type = #{materialType ,jdbcType=VARCHAR},
+				dynamic_Url = #{dynamicUrl ,jdbcType=VARCHAR},
+				describle = #{describle ,jdbcType=VARCHAR}
+				where dynamic_number = #{dynamicNumber}
+	</update>
+	<delete id="delDynamic" parameterType="com.pm.dynamic_material.entity.Dynamic">
+		delete from material_dynamic where dynamic_number = #{dynamicNumber}
+	</delete>
+ </mapper>

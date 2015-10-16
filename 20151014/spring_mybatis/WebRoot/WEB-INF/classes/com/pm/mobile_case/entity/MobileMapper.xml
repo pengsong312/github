@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.pm.help.dao.CommDao">
+ <!-- 查询所有Web -->
+ 	<select id="findAllMobile" resultType="com.pm.mobile_case.entity.Mobile" resultMap="findMobileMap">
+ 		select * from material_mobile_case
+ 		<where>
+ 			<if test="mobileIntf!= null&amp;&amp; mobileIntf.length()>0">
+ 				and mobile_Intf like  '%'||#{mobileIntf}||'%'
+ 			</if>
+ 		</where>
+ 		order by thumb desc,look desc,mobile_Intf asc
+ 	</select>
+ 	<select id="findOneMobile" resultType="com.pm.mobile_case.entity.Mobile" resultMap="findMobileMap">
+ 		select * from material_mobile_case
+ 		<where>
+ 			<if test="mobileIntf!= null&amp;&amp; mobileIntf.length()>0">
+ 				and mobile_Intf = #{mobileIntf}
+ 			</if>
+ 		</where>
+ 		order by thumb desc,look desc,mobile_Intf asc
+ 	</select>
+ 	 <select id="findOneApp" resultType="com.pm.mobile_case.entity.App" resultMap="findAppMap">
+ 		select * from material_app
+ 		<where>
+ 			<if test="appIntf!= null&amp;&amp; appIntf.length()>0">
+ 				and app_intf = #{appIntf}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	<select id="findMobileByNumber" resultType="com.pm.mobile_case.entity.Mobile" resultMap="findMobileMap">
+ 		select * from material_mobile_case
+ 		<where>
+ 			<if test="mobileNumber!= null&amp;&amp; mobileNumber.length()>0">
+ 				and mobile_number = #{mobileNumber}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	 <select id="findAllApp" resultType="com.pm.mobile_case.entity.App" resultMap="findAppMap">
+ 		select * from material_app
+ 		<where>
+ 			<if test="appIntf!= null&amp;&amp; appIntf.length()>0">
+ 				and app_intf like '%'||#{appIntf}||'%'
+ 			</if>
+ 		</where>
+ 		 order by thumb desc,look desc,app_intf asc
+ 	</select>
+ 	<select id="findAppByNumber" resultType="com.pm.mobile_case.entity.App" resultMap="findAppMap">
+ 		select * from material_app
+ 		<where>
+ 			<if test="appNumber!= null&amp;&amp; appNumber.length()>0">
+ 				and app_number = #{appNumber}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<resultMap type="com.pm.mobile_case.entity.App" id="findAppMap">
+ 		<result property="appNumber" column="app_number"/>
+		<result property="appIntf" column="app_Intf"/>
+		<result property="style" column="style"/>
+		<result property="color" column="color"/>
+		<result property="industry" column="industry"/>
+		<result property="designer" column="designer"/>
+		<result property="appUrl" column="app_Url"/>
+		<result property="picture" column="picture"/>
+		<result property="describe" column="describe"/>
+			<result property="look" column="look"/>
+	<result property="thumb" column="thumb"/>
+	</resultMap>
+	<resultMap type="com.pm.mobile_case.entity.Mobile" id="findMobileMap">
+		<result property="mobileNumber" column="mobile_number"/>
+		<result property="mobileIntf" column="mobile_Intf"/>
+		<result property="style" column="style"/>
+		<result property="color" column="color"/>
+		<result property="industry" column="industry"/>
+		<result property="designer" column="designer"/>
+		<result property="mobileUrl" column="mobile_Url"/>
+		<result property="picture" column="picture"/>
+		<result property="describe" column="describe"/>
+		<result property="look" column="look"/>
+		<result property="thumb" column="thumb"/>
+	</resultMap>
+	<!-- 上传手机站案例 -->
+	<insert id="uploadMobile" parameterType="com.pm.mobile_case.entity.Mobile">
+		insert into material_mobile_case(mobile_number,mobile_Intf,style,color,industry,designer,mobile_Url,describe,picture) values(
+			#{mobileNumber,jdbcType=VARCHAR},
+			#{mobileIntf,jdbcType=VARCHAR},
+			#{style,jdbcType=VARCHAR},
+			#{color,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
+			#{designer,jdbcType=VARCHAR},
+			#{mobileUrl,jdbcType=VARCHAR},
+			#{describe,jdbcType=VARCHAR},
+			#{picture,jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- 增加手机站查看量 -->
+	<update id="addMobileLook" parameterType="com.pm.mobile_case.entity.Mobile" >
+		update  material_mobile_case set 
+			look = #{look ,jdbcType=VARCHAR}
+			where mobile_Intf =#{mobileIntf}
+	</update>
+	<!-- 增加手机站的点赞量 -->
+	<update id="addMobileThumb" parameterType="com.pm.mobile_case.entity.Mobile" >
+		update  material_mobile_case set 
+			thumb = #{thumb ,jdbcType=VARCHAR}
+			where mobile_number =#{mobileNumber}
+	</update>
+	<!-- 上传App案例 -->
+	<insert id="uploadApp" parameterType="com.pm.mobile_case.entity.App">
+		insert into material_app(app_number,app_intf,style,color,industry,designer,app_url,describe,picture) values(
+			#{appNumber,jdbcType=VARCHAR},
+			#{appIntf,jdbcType=VARCHAR},
+			#{style,jdbcType=VARCHAR},
+			#{color,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
+			#{designer,jdbcType=VARCHAR},
+			#{appUrl,jdbcType=VARCHAR},
+			#{describe,jdbcType=VARCHAR},
+			#{picture,jdbcType=VARCHAR}
+			)
+	</insert>
+		<!-- 增加App查看量 -->
+	<update id="addAppLook" parameterType="com.pm.mobile_case.entity.App" >
+		update  material_app set 
+			look = #{look ,jdbcType=VARCHAR}
+			where app_Intf =#{appIntf}
+	</update>
+	<!-- 增加App的点赞量 -->
+	<update id="addAppThumb" parameterType="com.pm.mobile_case.entity.App" >
+		update  material_app set 
+			thumb = #{thumb ,jdbcType=VARCHAR}
+			where app_number =#{appNumber}
+	</update>
+	<update id="updateMobile" parameterType="com.pm.mobile_case.entity.Mobile">
+		update material_mobile_case set
+				mobile_Intf= #{mobileIntf ,jdbcType=VARCHAR},
+				style= #{style ,jdbcType=VARCHAR},
+				color = #{color ,jdbcType=VARCHAR},
+				industry = #{industry ,jdbcType=VARCHAR},
+				designer = #{designer ,jdbcType=VARCHAR},
+				mobile_Url = #{mobileUrl ,jdbcType=VARCHAR},
+				picture = #{picture ,jdbcType=VARCHAR},
+				describe = #{describe ,jdbcType=VARCHAR}
+				where mobile_number = #{mobileNumber}
+	</update>
+	<update id="updateApp" parameterType="com.pm.mobile_case.entity.App">
+		update material_app set
+				app_Intf= #{appIntf ,jdbcType=VARCHAR},
+				style= #{style ,jdbcType=VARCHAR},
+				color = #{color ,jdbcType=VARCHAR},
+				industry = #{industry ,jdbcType=VARCHAR},
+				designer = #{designer ,jdbcType=VARCHAR},
+				app_Url = #{appUrl ,jdbcType=VARCHAR},
+				picture = #{picture ,jdbcType=VARCHAR},
+				describe = #{describe ,jdbcType=VARCHAR}
+				where app_number = #{appNumber}
+	</update>
+	<update id="addMobileLookAndThumb" parameterType="com.pm.mobile_case.entity.Mobile">
+		update material_mobile_case set
+				look= #{look ,jdbcType=VARCHAR},
+				thumb = #{thumb ,jdbcType=VARCHAR}
+				where mobile_Intf = #{mobileIntf}
+	</update>
+	<delete id="delMobile" parameterType="com.pm.mobile_case.entity.Mobile">
+		delete from material_mobile_case where mobile_Number = #{mobileNumber}
+	</delete>
+	<delete id="delApp" parameterType="com.pm.mobile_case.entity.App">
+		delete from material_app where app_Number = #{appNumber}
+	</delete>
+	<update id="addMobilePicture">
+		update material_mobile_case
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where mobile_Intf = #{mobileIntf}
+	</update>
+	<update id="addAppPicture">
+		update material_app
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where app_Intf = #{appIntf}
+	</update>
+	<update id="delMobilePicture">
+		update material_mobile_case
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where mobile_Intf = #{mobileIntf}
+	</update>
+	<update id="delAppPicture">
+		update material_app
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where app_Intf = #{appIntf}
+	</update>
+ </mapper>

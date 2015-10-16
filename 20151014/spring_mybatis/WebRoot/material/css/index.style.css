@@ -1,0 +1,44 @@
+.flowItem { margin-bottom: 27px; z-index: 0; border: 0px solid #000; position:relative;}
+.flowItem.active { z-index:10; width:40%;}
+.flowItem .imgBlock { margin-bottom: 12px; height: 230px; overflow:hidden; }
+.flowItem .imgBlock img{ width: auto; height: 100%;}
+
+.flowItem .infoBlock{
+	background-color: #fff;
+	border: 1px solid #eaeaea;
+	border-radius: 5px;
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, .2);
+	overflow: hidden;
+	color:#666;
+}
+/*.flowItem:nth-child(2n) .infoBlock { height:500px;}*/
+.flowItem .mediaBlock { background-color: #f4f4f4; border-top: 1px solid #eaeaea; height: 44px; margin-top: 10px;}
+.flowItem .mediaBlock a { color: #8b8b8c; margin-right: 15px; line-height: 32px;}
+.flowItem .mediaBlock a:hover { color: #184691;}
+.flowItem .mediaBlock a i { margin-right: 8px;}
+.flowItem .infoBlock p { padding:5px 15px;}
+.flowItem .colorBlock { width: 10px; height: 10px; display: inline-block;}
+.flowItem .hoverBlock { 
+	position:absolute;
+	width: 390px;
+	top: 50%;
+	left: 50%;
+	margin-left: -195px;
+	
+	box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.2);
+	border-radius: 5px;
+	background:#fff;
+	overflow:hidden;
+	height: 0;
+	opacity: 0;
+	transition: opacity .4s;
+	-webkit-transition: opacity .4s;
+	z-index:0;
+	margin-top:0px;
+}
+.flowItem .HimgBlock { margin-bottom: 12px; height: 304px; overflow:hidden; border: 0px solid #000;}
+.flowItem .hoverBlock p { padding:12px 15px;}	
+.flowItem .hoverBlock p .btn { min-width: 130px;}
+.flowItem .hoverBlock p .btn:first-child { margin-right: 36px;}
+.flowItem:hover { z-index: 10;}
+.flowItem:hover .hoverBlock { display:block; opacity: 1; height: 440px;margin-top: -220px;}

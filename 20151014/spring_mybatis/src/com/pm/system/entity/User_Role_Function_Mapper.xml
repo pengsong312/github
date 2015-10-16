@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.pm.help.dao.CommDao">
+ 	<!--查询登陆用户-->
+ 	<select id="findAllUser" resultType="com.pm.system.entity.User" resultMap="addResultMap">
+ 		select * from material_user 
+ 		 <where>
+ 			<if test="userId!= null&amp;&amp; userId.length()>0">
+ 				and userid like  '%'||#{userId}||'%'
+ 			</if>
+ 			<if test="roleIds!= null&amp;&amp; roleIds.length()>0">
+ 				and roleId like  '%'||#{roleIds}||'%'
+ 			</if>
+ 		</where>
+ 		order by roleId
+ 	</select>
+ 	<!--查询登陆用户-->
+ 	<select id="findLoginUser" resultType="com.pm.system.entity.User" resultMap="addResultMap">
+ 		select * from MATERIAL_USER  where userName = #{userName} and password =  #{passWord}
+ 	</select>
+ 	
+ 	<select id="findOneUser" resultType="com.pm.system.entity.User" resultMap="addResultMap">
+ 		select * from MATERIAL_USER  
+ 		<where>
+ 			<if test="userName!=null&amp;&amp;userName.length()>0">
+ 				and USERNAME = #{userName}
+ 			</if>
+ 			<if test="passWord!=null&amp;&amp;passWord.length()>0">
+ 				and PASSWORD = #{passWord}
+ 			</if>
+ 			<if test="userId!=null&amp;&amp;userId.length()>0">
+ 				and userid like '%'||#{userId}||'%'
+ 			</if>
+ 		</where>
+ 		order by userId
+ 	</select><!--
+ 	查询用户
+ 	<select id="">
+ 		select u.*,u.rowid,ur.roleid from material_user u left join material_user_role ur on u.userid = ur.userid  where u.userid = #{userId}
+ 	</select>
+ 	--><!--查询用户角色-->
+ 	<select id="findUserRole" resultType="com.pm.system.entity.Role">
+ 		select * from material_role 
+ 			where roleId = #{roleId} 
+ 			order by roleId
+ 	</select>
+ 	<!--查询用户角色权限-->
+ 	<select id="findUserRolePermission" resultType="com.pm.system.entity.Permission" resultMap="findPermission">
+ 		select p.* from material_permission p
+ 			where p.permissionid =#{permissionId}
+ 			order by p.permissionId
+ 	</select>	
+ 	<resultMap type="com.pm.system.entity.Permission" id="findPermission">
+ 	  <result property="permissionId" column="permissionId"/>
+	  <result property="functionId" column="functionId"/>
+	  <result property="functionName" column="functionName"/>
+	  <result property="function" column="function"/>
+ 	</resultMap>
+ 	<resultMap id="addResultMap" type="com.pm.system.entity.User">
+	  <result property="userId" column="USERID"/>
+	  <result property="userName" column="USERNAME"/>
+	  <result property="realName" column="REALNAME"/>
+	  <result property="passWord" column="PASSWORD"/>
+	  <result property="photo" column="PHOTO"/>
+	  <result property="roleIds" column="ROLEID"/>
+
+	</resultMap>
+	<insert id="addUser" parameterType="com.pm.system.entity.User">
+		insert into material_user values(
+			#{userId,jdbcType=VARCHAR},
+			#{userName,jdbcType=VARCHAR},
+			#{passWord,jdbcType=VARCHAR},
+			#{photo,jdbcType=VARCHAR},
+			#{roleIds,jdbcType=VARCHAR},
+			#{realName,jdbcType=VARCHAR}
+			
+		)
+	</insert>
+	<delete id="delUser" parameterType="com.pm.system.entity.User">
+		delete from  material_user where
+			userid = #{userId}
+	</delete>
+	<update id="updateUserMessage" parameterType="com.pm.system.entity.User">
+		update material_user set
+			username = #{userName ,jdbcType=VARCHAR},
+			password = #{passWord ,jdbcType=VARCHAR},
+			photo = #{photo ,jdbcType=VARCHAR},
+			roleId = #{roleIds ,jdbcType=VARCHAR}
+			where userid = #{userId}
+	</update>
+	<update id="updateUserPhoto" parameterType="com.pm.system.entity.User">
+		update material_user set
+			photo = #{photo ,jdbcType=VARCHAR}
+			where userid = #{userId}
+	</update>
+ </mapper>

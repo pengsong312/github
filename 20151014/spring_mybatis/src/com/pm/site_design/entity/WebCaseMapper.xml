@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.pm.help.dao.CommDao">
+ <!-- 查询所有Web -->
+ 	<select id="findAllWebCase" resultType="com.pm.site_design.entity.WebCase" resultMap="WebCaseMap">
+ 		select distinct * from material_web_case 
+ 		<where>
+ 			<if test="siteIntf!= null&amp;&amp;siteIntf.length()>0">
+ 				and site_intf like '%'||#{siteIntf}||'%'
+ 			</if>
+ 			<if test="style!=null&amp;&amp;style.length()>0">
+ 				and style like '%'||#{style}||'%'
+ 			</if>
+ 			<if test="industry!=null&amp;&amp;industry.length()>0">
+ 				and industry like '%'||#{industry}||'%'
+ 			</if>
+ 			<if test="color!=null&amp;&amp;color.length()>0">
+ 				and color like '%'||#{color}||'%'
+ 			</if>
+ 			<if test="designer!=null&amp;&amp;designer.length()>0">
+ 				and designer like '%'||#{designer}||'%'
+ 			</if>
+ 		</where>
+ 		order by thumb desc,look desc,site_intf asc
+ 	</select>
+ 	<select id="findOneWebCase" resultType="com.pm.site_design.entity.WebCase" resultMap="WebCaseMap">
+ 		select distinct * from material_web_case 
+ 		<where>
+ 			<if test="siteIntf!= null&amp;&amp;siteIntf.length()>0">
+ 				and site_intf = #{siteIntf}
+ 			</if> 			
+ 		</where> 		
+ 	</select>
+ 	 <select id="findSiteByNumber" resultType="com.pm.site_design.entity.WebCase" resultMap="WebCaseMap">
+ 		select  * from material_web_case where site_number = #{siteNumber}
+ 	</select>
+ 	
+ 	<!--增加访问量-->
+ 	<!--
+ 	<update id="addSiteLook" parameterType="com.pm.site_design.entity.WebCase">
+ 		update material_web_case set 
+ 			look = #{look,jdbcType=VARCHAR}
+ 			where site_intf = #{siteIntf}
+ 	</update>
+ 	-->
+ 	<resultMap type="com.pm.site_design.entity.WebCase" id="WebCaseMap">
+ 		<result property="siteIntf" column="site_intf"/>
+ 		<result property="siteUrl" column="site_Url"/>
+ 		<result property="siteNumber" column="site_Number"/>
+ 	</resultMap>
+ 	<!-- 上传网站案例 -->
+	<insert id="uploadSite" parameterType="com.pm.site_design.entity.WebCase">
+		insert into material_web_case(site_number,site_intf,style,color,industry,designer,site_Url,describe,picture) values(
+			#{siteNumber,jdbcType=VARCHAR},
+			#{siteIntf,jdbcType=VARCHAR},
+			#{style,jdbcType=VARCHAR},
+			#{color,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
+			#{designer,jdbcType=VARCHAR},
+			#{siteUrl,jdbcType=VARCHAR},
+			#{describe,jdbcType=VARCHAR},
+			#{picture,jdbcType=VARCHAR}
+			)
+	</insert>
+	<update id="updateSite" parameterType="com.pm.site_design.entity.WebCase">
+			update material_web_case set
+				site_Intf= #{siteIntf ,jdbcType=VARCHAR},
+				style= #{style ,jdbcType=VARCHAR},
+				color = #{color ,jdbcType=VARCHAR},
+				industry = #{industry ,jdbcType=VARCHAR},
+				designer = #{designer ,jdbcType=VARCHAR},
+				site_Url = #{siteUrl ,jdbcType=VARCHAR},
+				picture = #{picture ,jdbcType=VARCHAR},
+				describe = #{describe ,jdbcType=VARCHAR}
+				where site_number = #{siteNumber}
+	</update>
+	<update id="addSiteLook" parameterType="com.pm.site_design.entity.WebCase">
+		update material_web_case set
+				look= #{look ,jdbcType=VARCHAR}
+				where site_Intf = #{siteIntf}
+	</update>
+	<update id="addSiteThumb" parameterType="com.pm.site_design.entity.WebCase">
+		update material_web_case set
+				thumb = #{thumb ,jdbcType=VARCHAR}
+				where site_number = #{siteNumber}
+	</update>
+	<delete id="delSite" parameterType="com.pm.site_design.entity.WebCase">
+		delete from material_web_case where site_number = #{siteNumber}
+	</delete>
+	<update id="addSitePicture">
+		update material_web_case
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where site_Intf = #{siteIntf}
+	</update>
+	<update id="delSitePicture">
+		update material_web_case
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where site_Intf = #{siteIntf}
+	</update>
+ </mapper>

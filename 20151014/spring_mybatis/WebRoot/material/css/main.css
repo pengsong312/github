@@ -1,0 +1,122 @@
+/* css reset */
+body {font-family:"\5FAE\8F6F\96C5\9ED1", Verdana, Arial, Helvetica, sans-serif; }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+img { width:100%;}
+ol,ul,li { list-style:none; }
+/* css common */
+.container { width: 1128px;}
+.container1 { width: 1128px;}
+
+/*public class*/
+.POS-R { position: relative;}
+.FONT14 { font-size: 0.875em;}
+.FONT12 { font-size: 0.75em;}
+.CLEAR {clear:both;}
+.COLOR-W { color: #fff;}
+
+
+/*header*/
+#header { background-color: #184691; height: 62px;}
+#header .logo { width: 154px; padding-top: 16px;}
+#header .user { padding-top: 8px;}
+#header .userPic { width: 43px; height: 43px; overflow:hidden; border-radius: 100%; border: 3px solid rgba(255, 255, 255, .5);}
+#header .name { padding: 10px 7px 0 10px;}
+#header .name:hover { color: #fff;}
+#header .name:focus { color: #fff;}
+#header .name .btn-down { font-size: 22px; float:right; margin-left: 7px;}
+#header ul.dropdown-menu { font-size: 14px; top: 59px;}
+#header ul.dropdown-menu>li>ul { display: none; padding: 5px 0;}
+#header ul.dropdown-menu li>ul>li { width: 100%; }
+#header ul.dropdown-menu li>ul>li>a { padding: 3px 40px; display: block; width: 100%; }
+
+#banner { width: 100%; height: 205px; background-image: url(../images/banner-bg.png)}
+#banner	.bannerPic { width: 184px; margin-top: 9px;}
+#banner .bannerForms { width: 874px;}
+#banner .bannerForms input[type='text'] {
+	height: 45px;
+	background: rgba(0, 0, 0, .2);
+	color: #fff;
+	margin-top: 48px;
+	border: 1px solid rgba(255, 255, 255, .5);
+	border-radius: 0;
+	font-size: 0.875em;
+}
+#banner .bannerForms input[type='text']::-webkit-input-placeholder { color:#ffffff;}
+#banner .bannerForms input[type='text']::-moz-placeholder { color:#ffffff;}
+#banner .bannerForms input[type='text']:-ms-input-placeholder { color:#ffffff;}
+
+#banner .bannerForms input[type='submit'] {
+	position: absolute;
+	width: 54px;
+	top:0px;
+	right:0px;
+	height: 100%;
+	background-image: url(../images/search.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: transparent;
+	border:none;
+	box-shadow: none;
+} 
+
+#banner .selectGroup { padding-top: 12px;}
+#banner .bannerForms .selectItem { width: 205px; height: 34px; float:left; margin-left: 18px;}
+#banner .bannerForms .selectItem:first-child { margin-left:0px;}
+#banner .bannerForms .selectItem select { 
+	appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    
+	height: 34px; 
+	border: none; 
+	border-radius: 0;
+    padding-right: 35px;
+    
+    background-image: url(../images/select.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+    font-size: 0.875em;
+}
+#banner .bannerForms .selectItem select::-ms-expand { display: none; }
+
+#banner .mobileLink { margin-top: 35px; }
+#banner .mobileLink .btn-mobile-link { 
+	display:inline-block;
+	font-size: 0.875em; 
+	color: #fff; 
+	width: 118px; 
+	height: 37px; 
+	line-height: 22px;
+	background-color: rgba(255, 255, 255, .3);
+	box-shadow: none;
+	border: 1px solid rgba(255, 255, 255, .5);
+}
+#banner .mobileLink .btn.active { background-color: #df6737}
+#banner .mobileLink .btn-mobile-link:first-child { margin-right: 40px;}
+
+#nav { height: 51px; background-color: #ffffff; box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, .2);}
+#nav ul { width: 100%; text-align: center;}
+#nav ul li { width: 173px; display: inline-block;}
+#nav ul li a { display: inline-block; width: 100%; line-height: 51px; font-size: 0.875em; position:relative;}
+#nav ul li a .line { position: absolute; width:1px; height:14px; top: 50%; right: 0px; margin-top: -7px; background-color: #dbdbdb;}
+#nav ul li:last-child a .line { display:none;}
+#nav ul li a:hover { color: #f9671e}
+#nav ul li.active a { color: #f9671e}
+
+#wrapper { margin-top: 23px; padding-bottom: 31px; border-bottom: 1px solid #dbdbdb;}
+
+#noMore { padding: 40px 0; text-align: center;  border-top: 1px solid #dbdbdb; margin-top: 1px; display:none;}
+#noMore .btn-noMore { width: 142px; display: inline-block; height: 46px; border: 1px solid #e4e4e4; line-height: 46px;}
+
+#loading { display: none;}
+#loading .loadingPic { background-color: #ffffff; text-align:center;}
+#loading img { width:auto; display:inline-block;}
+
+.colorBlock {border: 1px solid #666;}
+	
+	
+	
+	
+	
+	
+	

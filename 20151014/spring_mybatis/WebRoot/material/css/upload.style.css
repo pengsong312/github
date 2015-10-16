@@ -1,0 +1,57 @@
+html { height: 100%;}
+body {
+	background-image: url(../images/uploadbg.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+#panel-wrapper { margin-top: 24px; }
+.panel { min-height: 655px;}
+.panel img { width: auto; }
+.panel .panel-heading { background-color: #fff;}
+.back { font-size: 14px;}
+
+#panel-wrapper .control-label { font-size: 14px; font-weight: normal; text-align:left; padding: 7px 0;}
+.form-label { padding: 7px 0; font-size: 12px; color: red;}
+
+button.btn-upload {
+	width: 160px;
+	height: 40px;
+	border-radius: 20px;
+	-webkit-radius: 20px;
+	background-color: #0d77c8;
+	color: #fff;
+	margin: 60px 20px 30px 180px;
+}
+button.btn-upload+span {
+	display: inline-block;
+	vertical-align: top;
+	margin-top: 70px;
+	font-size: 14px;
+}
+
+button.btn-submit {
+	display: block;
+	margin: 40px auto;
+	width: 304px;
+	height: 55px;
+	background: #fcbb49;
+	color: #fff;	
+	letter-spacing: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

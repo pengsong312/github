@@ -1,0 +1,42 @@
+html { height: 100%;}
+body {
+	background-image: url(../images/uploadbg.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+#panel-wrapper { margin-top: 24px; }
+.panel { min-height: 655px;}
+.panel img { width: auto; }
+.panel .panel-heading { background-color: #fff;}
+.back { font-size: 14px; line-height: 35px;}
+
+#panel-wrapper .row { margin-top: 60px;}
+#panel-wrapper .row p {
+	margin-bottom: 46px;
+}
+
+#panel-wrapper .btn-edit, #panel-wrapper .btn-modify{
+	background: #f3f3f3;
+	border: 1px solid #dadada;
+	width: 164px;
+}
+#panel-wrapper .btn-edit:hover { color: #333;}
+
+#panel-wrapper .headPic { width: 162px; float: right; margin-bottom: 22px;}
+#panel-wrapper .headPic img { width: 100%;}
+.headPic+.btn { float: right;}
+
+
+
+
+
+
+
+
+
+
+
+
+

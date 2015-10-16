@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.pm.help.dao.CommDao">
+ <!-- 查询所有Web -->
+ 	<select id="findAllTemplate" resultType="com.pm.template_case.entity.Template" resultMap="findTemplateMap">
+ 		select * from material_template 
+ 		<where>
+ 			<if test="templateIntf!= null&amp;&amp;templateIntf.length()>0">
+ 				and template_Intf like '%'||#{templateIntf}||'%'
+ 			</if>
+ 			<if test="style!= null&amp;&amp;style.length()>0">
+ 				and style like '%'||#{style}||'%'
+ 			</if>
+ 		</where>
+ 		order by thumb desc,look desc,template_intf asc
+ 	</select>
+ 	<select id="findOneTemplate" resultType="com.pm.template_case.entity.Template" resultMap="findTemplateMap">
+ 		select * from material_template 
+ 		<where>
+ 			<if test="templateIntf!= null&amp;&amp;templateIntf.length()>0">
+ 				and template_Intf = #{templateIntf}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	 
+ 	<select id="findTemplateByNumber" resultType="com.pm.template_case.entity.Template" resultMap="findTemplateMap">
+ 		select * from material_template 
+ 		<where>
+ 			<if test="templateNumber!= null&amp;&amp;templateNumber.length()>0">
+ 				and template_number like '%'||#{templateNumber}||'%'
+ 			</if>
+ 		</where>
+ 	</select>
+	<resultMap type="com.pm.template_case.entity.Template" id="findTemplateMap">
+		<result property="templateNumber" column="template_number"/>
+		<result property="templateIntf" column="template_Intf"/>
+		<result property="style" column="style"/>
+		<result property="color" column="color"/>
+		<result property="industry" column="industry"/>
+		<result property="designer" column="designer"/>
+		<result property="templateUrl" column="template_Url"/>
+		<result property="describe" column="describe"/>
+		<result property="picture" column="picture"/>
+	</resultMap>
+	
+ 	<!-- 上传模板案例 -->
+	<insert id="uploadTemplate" parameterType="com.pm.template_case.entity.Template">
+		insert into material_template(template_number,template_Intf,style,color,industry,designer,template_Url,describe,picture) values(
+			#{templateNumber,jdbcType=VARCHAR},
+			#{templateIntf,jdbcType=VARCHAR},
+			#{style,jdbcType=VARCHAR},
+			#{color,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
+			#{designer,jdbcType=VARCHAR},
+			#{templateUrl,jdbcType=VARCHAR},
+			#{describe,jdbcType=VARCHAR},
+			#{picture,jdbcType=VARCHAR}
+			)
+	</insert>
+	<!-- 增加访问量与点赞量 -->
+	<update id="addTemplateThumb" parameterType="com.pm.template_case.entity.Template">
+		update material_template set 
+			thumb = #{thumb,jdbcType=VARCHAR}
+			where template_number = #{templateNumber}
+	</update>
+	<update id="addTemplateLook" parameterType="com.pm.template_case.entity.Template">
+		update material_template set 
+			look = #{look,jdbcType=VARCHAR}
+			where template_Intf = #{templateIntf}
+	</update>
+
+	<update id="updateTemplate" parameterType="com.pm.template_case.entity.Template">
+		update MATERIAL_TEMPLATE set
+				template_Intf= #{templateIntf ,jdbcType=VARCHAR},
+				style= #{style ,jdbcType=VARCHAR},
+				color = #{color ,jdbcType=VARCHAR},
+				industry = #{industry ,jdbcType=VARCHAR},
+				designer = #{designer ,jdbcType=VARCHAR},
+				template_Url = #{templateUrl ,jdbcType=VARCHAR},
+				picture = #{picture ,jdbcType=VARCHAR},
+				describe = #{describe ,jdbcType=VARCHAR}
+				where template_number = #{templateNumber}
+	</update>
+	
+	<update id="addTemplateLookAndThumb" parameterType="com.pm.template_case.entity.Template">
+		update material_template set
+				look= #{look ,jdbcType=VARCHAR},
+				thumb = #{thumb ,jdbcType=VARCHAR}
+				where template_Intf = #{templateIntf}
+	</update>
+	<delete id="delTemplate" parameterType="com.pm.template_case.entity.Template">
+		delete from material_template where template_number = #{templateNumber}
+	</delete>
+	
+	<update id="addTemplatePicture">
+		update material_template
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where template_Intf = #{templateIntf}
+	</update>
+	<update id="delTemplatePicture">
+		update material_template
+			set	picture = #{picture,jdbcType=VARCHAR}
+			where template_Intf = #{templateIntf}
+	</update>
+ </mapper>
